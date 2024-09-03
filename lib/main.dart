@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Flutter: Primeiros Passos'),
+          title: const Text('Flutter: Primeiros Passos'),
         ),
         body: ListView(
           children: <Widget>[
@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Row(
