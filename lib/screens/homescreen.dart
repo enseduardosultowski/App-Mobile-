@@ -14,6 +14,7 @@ class HomeScreen extends StatelessWidget {
         image: DecorationImage(image: AssetImage('assets/images/imagem.jpg'), fit: BoxFit.cover),
         color: Colors.black,
       ),
+      child: const Text("Alalala"),
 
       );
   }
