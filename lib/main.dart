@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/homescreen.dart';
+import 'package:flutter_application_1/screens/loginScreen.dart';
 import 'package:flutter_application_1/screens/registerScreen.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() {
+  sqfliteFfiInit();
+  databaseFactory = databaseFactoryFfi;
   runApp(const MyApp());
 }
 
@@ -18,9 +23,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routes: {
-        //'/' : (context) => const LoginScreen(),
+        '/' : (context) => const LoginScreen(),
         '/home' : (context) => const HomeScreen(),
-        '/' : (context) => const RegisterScreen(),
+        '/register' : (context) => const RegisterScreen(),
       },
     );
   }
