@@ -12,7 +12,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final LoginController controller = Get.put(LoginController());
-
   bool _isLoading = false;
 
   @override
@@ -20,7 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(''),
+        title: Text('Login'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -29,6 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
+              // Campo de E-mail
               TextFormField(
                 controller: controller.emailController,
                 decoration: const InputDecoration(labelText: 'Email'),
@@ -42,6 +42,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   return null;
                 },
               ),
+              
+              // Campo de Senha
               TextFormField(
                 controller: controller.passwordController,
                 decoration: const InputDecoration(labelText: 'Password'),
@@ -55,33 +57,59 @@ class _LoginScreenState extends State<LoginScreen> {
                   return null;
                 },
               ),
+
               const SizedBox(height: 20),
+
+              // Botão de login
               _isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : ElevatedButton(
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      setState(() {
-                        _isLoading = true;
-                      });
-                      bool success = await controller.loginUser();
-                      setState(() {
-                        _isLoading = false;
-                      });
-                      if (success) {
-                        Get.offAllNamed('/home'); 
-                      } else {
-                        Get.snackbar(
-                          'Login Failed', 
-                          'Invalid credentials',
-                          snackPosition: SnackPosition.BOTTOM,
-                        );
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        // Inicia o loading enquanto processa
+                        setState(() {
+                          _isLoading = true;
+                        });
+
+                        try {
+                          bool success = await controller.loginUser();
+
+                          if (success) {
+                            // Navega para a tela principal
+                            Get.offAllNamed('/home'); 
+                          } else {
+                            // Exibe uma mensagem de erro após um pequeno delay
+                            Future.delayed(Duration.zero, () {
+                              Get.snackbar(
+                                'Login Failed',
+                                'Invalid credentials',
+                                snackPosition: SnackPosition.BOTTOM,
+                              );
+                            });
+                          }
+                        } catch (e) {
+                          // Exibe uma mensagem de erro genérica caso algo dê errado
+                          Future.delayed(Duration.zero, () {
+                            Get.snackbar(
+                              'Error',
+                              'An error occurred. Please try again later.',
+                              snackPosition: SnackPosition.BOTTOM,
+                            );
+                          });
+                        } finally {
+                          // Finaliza o loading
+                          setState(() {
+                            _isLoading = false;
+                          });
+                        }
                       }
-                    }
-                  },
-                  child: const Text('Login'),
-                ),
+                    },
+                    child: const Text('Login'),
+                  ),
+
               const SizedBox(height: 20),
+
+              // Botão de registro
               TextButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/register');

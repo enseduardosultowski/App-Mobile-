@@ -34,10 +34,9 @@ class DataBaseHelper {
   }
   // OnCreate cria as tabelas, colunas e seus tipos dentro do banco de dados já aberto
   Future<void> _onCreate(Database db, int version) async {
-
     await db.execute('''
       CREATE TABLE users (
-        id INTERGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         email TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL,
@@ -47,21 +46,22 @@ class DataBaseHelper {
 
     await db.execute('''
       CREATE TABLE products (
-        id INTERGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         description TEXT NOT NULL,
-        price REAL NOT NULL,
+        price REAL NOT NULL
       )
     ''');
 
-          await db.execute('''
+    await db.execute('''
       CREATE TABLE cart (
-        id INTERGER PRIMARY KEY AUTOINCREMENT,
-        productid INTERGER NOT NULL,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        productid INTEGER NOT NULL,
         FOREIGN KEY (productid) REFERENCES products (id)
       )
     ''');
   }
+
 // Fecha o banco de dados
   Future<void> close() async {
     final db = await database;

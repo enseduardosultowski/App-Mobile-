@@ -65,7 +65,7 @@ class _RegisterScreenState extends State<RegisterScreen>{
                             ElevatedButton(
                                 onPressed: () {
                                     if (_formularioKey.currentState!.validate()) {
-                                        Navigator.pushNamed(context, '/login');
+                                        Navigator.pushNamed(context, '/');
                                     }else{
                                         const Text('Alguma excessão ocorreu');
                                     }
